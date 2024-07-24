@@ -38,13 +38,17 @@ jobs:
         echo "New version: $VERSION"
 
     - name: Build Docker Image
+      env:
+         VERSION: ${{ steps.idVersionStep.outputs.version }}
       run: |
-        docker build . -t jos3docker/docker-graphql:0.0.2
+        docker build . -t jos3docker/docker-graphql:$VERSION
         docker build . -t jos3docker/docker-graphql:latest
 
     - name: Push Docker Image
+      env:
+         VERSION: ${{ steps.idVersionStep.outputs.version }}
       run: |
-        docker push jos3docker/docker-graphql:0.0.2
+        docker push jos3docker/docker-graphql:$VERSION
         docker push jos3docker/docker-graphql:latest
 
 #    - name: Build the Docker image
